@@ -4,6 +4,7 @@ import { Alert } from "@/components/Alert";
 import "react-toastify/dist/ReactToastify.css";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import HeaderNotes from "@/components/HeaderNotes";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`

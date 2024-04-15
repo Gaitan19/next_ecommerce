@@ -1,5 +1,5 @@
 import { IProduct } from '@/models/productsModel';
 
-export type TPoducts = IProduct[] | string;
+export type TPoducts = IProduct[];
 
-export type TPoduct = IProduct | string;
+export type TPoduct = IProduct;

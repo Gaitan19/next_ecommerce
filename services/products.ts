@@ -9,15 +9,16 @@ class Products {
     try {
       const { error, data: products } = await supabase
         .from('products')
-        .select();
+        .select()
+        .order('id', { ascending: true });
 
       if (error) {
-        return "couldn't read products";
+        throw new Error("couldn't read products");
       }
 
       return products;
     } catch (error: any) {
-      return error.message;
+      throw new Error(error.message);
     }
   }
 
@@ -31,11 +32,11 @@ class Products {
         .single();
 
       if (error) {
-        return "couldn't read products";
+        throw new Error("couldn't read products");
       }
       return product;
     } catch (error: any) {
-      return error.message;
+      throw new Error(error.message);
     }
   }
 }

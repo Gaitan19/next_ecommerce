@@ -38,8 +38,8 @@ const HeaderNotes = ({ value }: any) => {
           <CCollapse className="navbar-collapse" visible={visible}>
             <CNavbarBrand href="/Home">
               <Image
-                width={100}
-                height={100}
+                width={70}
+                height={60}
                 src={ecommerce_logo}
                 alt="ecommerce logo"
               />

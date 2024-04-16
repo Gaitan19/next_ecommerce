@@ -3,6 +3,7 @@ import '@/styles/main.scss';
 import { Alert } from '@/components/Alert';
 import 'react-toastify/dist/ReactToastify.css';
 import '@coreui/coreui/dist/css/coreui.min.css';
+import { EcommerceContext } from '@/context/FoodinglyContext';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -23,7 +24,7 @@ export default function RootLayout({
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
         <main className="min-h-screen flex flex-col items-center">
-          {children}
+          <EcommerceContext>{children}</EcommerceContext>
           <Alert />
         </main>
       </body>

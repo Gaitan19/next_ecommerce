@@ -2,13 +2,14 @@
 import { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { IProduct } from '@/models/productsModel';
 
 const defaultContextValue = {
   visibleCart: false,
   setVisibleCart: (value: boolean) => {},
   productsCart: [],
-  addProductCart: (product: any) => {},
-  deleteProductCart: (product: { name: any }) => {},
+  addProductCart: (product: IProduct) => {},
+  deleteProductCart: (product: IProduct) => {},
   handleProductQuantity: (id: any, value: any) => {},
   getTotalPrice: () => 0,
 };
@@ -17,17 +18,17 @@ const ecommerceContext = createContext(defaultContextValue);
 
 const EcommerceContext = ({ children }: { children: React.ReactNode }) => {
   const [visibleCart, setVisibleCart] = useState(false);
-  const [productsCart, setProductsCart] = useLocalStorage('productsCart', []);
+  const [productsCart, setProductsCart] = useLocalStorage('productsCartE', []);
 
-  const addProductCart = (product: any) => {
+  const addProductCart = (product: IProduct) => {
     const newCartProduct = { ...product, quantity: 1 };
 
     setProductsCart([...productsCart, newCartProduct]);
   };
 
-  const deleteProductCart = (product: { name: any }) => {
+  const deleteProductCart = (product: IProduct) => {
     const filterProducts = productsCart.filter(
-      (productCart: { name: any }) => productCart.name !== product.name
+      (productCart: IProduct) => productCart.id !== product.id
     );
 
     setProductsCart(filterProducts);

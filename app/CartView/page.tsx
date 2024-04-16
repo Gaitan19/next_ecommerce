@@ -1,9 +1,8 @@
 import HeaderEcommerce from '@/components/HeaderEcommerce';
-import Products from '@/components/Products';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export default function homePage() {
+export default function cartPage() {
   const cookieStore = cookies();
 
   const data = cookieStore.get('sb-fcybhjbilfsdcxkomjfk-auth-token');
@@ -13,7 +12,7 @@ export default function homePage() {
   return (
     <>
       <HeaderEcommerce value={data.value} />
-      <Products />
+      <div>cart view</div>
     </>
   );
 }

@@ -29,7 +29,7 @@ export default async function Index() {
     return redirect("/login");
   }
 
-  return redirect("/userNotes");
+  return redirect("/Home");
 
   const isSupabaseConnected = canInitSupabaseClient();
 

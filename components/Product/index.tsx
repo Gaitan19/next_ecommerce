@@ -1,5 +1,5 @@
 'use client';
-import { ecommerceContext } from '@/context/FoodinglyContext';
+import { ecommerceContext } from '@/context/EcommerceContext';
 import { IProduct } from '@/models/productsModel';
 import Image from 'next/image';
 import { useContext } from 'react';

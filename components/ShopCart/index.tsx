@@ -9,7 +9,7 @@ import {
 import Image from 'next/image';
 import { FaTrashAlt } from 'react-icons/fa';
 import { useContext } from 'react';
-import { ecommerceContext } from '@/context/FoodinglyContext';
+import { ecommerceContext } from '@/context/EcommerceContext';
 import { ICartProduct } from '@/models/productsModel';
 
 const ShopCart = () => {

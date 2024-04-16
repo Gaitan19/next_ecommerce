@@ -16,7 +16,7 @@ import Image from 'next/image';
 import ecommerce_logo from '@/assets/images/ecommerce_logo.png';
 import { navbarOptions } from '@/data/routes';
 import { FaShoppingBag } from 'react-icons/fa';
-import { ecommerceContext } from '@/context/FoodinglyContext';
+import { ecommerceContext } from '@/context/EcommerceContext';
 import { Badge } from '@mui/material';
 
 const HeaderNotes = ({ value }: any) => {

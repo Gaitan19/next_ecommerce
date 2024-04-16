@@ -3,7 +3,7 @@ import '@/styles/main.scss';
 import { Alert } from '@/components/Alert';
 import 'react-toastify/dist/ReactToastify.css';
 import '@coreui/coreui/dist/css/coreui.min.css';
-import { EcommerceContext } from '@/context/FoodinglyContext';
+import { EcommerceContext } from '@/context/EcommerceContext';
 import ShopCart from '@/components/ShopCart';
 
 const defaultUrl = process.env.VERCEL_URL

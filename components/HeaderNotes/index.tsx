@@ -12,9 +12,19 @@ import {
 } from '@coreui/react';
 import { useState } from 'react';
 import LogOut from '../LogOut';
+import Image from 'next/image';
+import ecommerce_logo from '@/assets/images/ecommerce_logo.png';
+import { navbarOptions } from '@/data/routes';
 
 const HeaderNotes = ({ value }: any) => {
   const [visible, setVisible] = useState(false);
+
+  const renderOptions = () =>
+    navbarOptions.map((option, index) => (
+      <CNavItem key={index} className="me-auto mb-2 mb-lg-0">
+        <CNavLink href={option.path}>{option.name}</CNavLink>
+      </CNavItem>
+    ));
 
   return (
     <header className="w-full">
@@ -26,21 +36,16 @@ const HeaderNotes = ({ value }: any) => {
             onClick={() => setVisible(!visible)}
           />
           <CCollapse className="navbar-collapse" visible={visible}>
-            <CNavbarBrand href="#">Hidden brand</CNavbarBrand>
+            <CNavbarBrand href="/Home">
+              <Image
+                width={100}
+                height={100}
+                src={ecommerce_logo}
+                alt="ecommerce logo"
+              />
+            </CNavbarBrand>
             <CNavbarNav className="me-auto mb-2 mb-lg-0">
-              <CNavItem>
-                <CNavLink href="#" active>
-                  Home
-                </CNavLink>
-              </CNavItem>
-              <CNavItem>
-                <CNavLink href="#">Link</CNavLink>
-              </CNavItem>
-              <CNavItem>
-                <CNavLink href="#" disabled>
-                  Disabled
-                </CNavLink>
-              </CNavItem>
+              {renderOptions()}
             </CNavbarNav>
             <LogOut value={value} />
           </CCollapse>

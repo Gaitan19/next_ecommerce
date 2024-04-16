@@ -13,7 +13,6 @@ export default function homePage() {
   return (
     <>
       <HeaderNotes value={data.value} />
-      <div>home</div>
       <Products />
     </>
   );

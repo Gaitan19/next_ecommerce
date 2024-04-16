@@ -10,7 +10,7 @@ import {
   CNavbarNav,
   CNavbarToggler,
 } from '@coreui/react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import LogOut from '../LogOut';
 import Image from 'next/image';
 import ecommerce_logo from '@/assets/images/ecommerce_logo.png';
@@ -52,16 +52,14 @@ const HeaderNotes = ({ value }: any) => {
               {renderOptions()}
             </CNavbarNav>
 
-            <div>
-              <CNavItem>
-                <button className="" onClick={() => setVisibleCart(true)}>
-                  <Badge badgeContent={productsCart.length} color="success">
-                    <FaShoppingBag />
-                  </Badge>
-                </button>
-              </CNavItem>
+            <div className="flex gap-5">
+              <button className="" onClick={() => setVisibleCart(true)}>
+                <Badge badgeContent={productsCart.length} color="success">
+                  <FaShoppingBag />
+                </Badge>
+              </button>
+              <LogOut value={value} />
             </div>
-            <LogOut value={value} />
           </CCollapse>
         </CContainer>
       </CNavbar>

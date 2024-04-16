@@ -1,3 +1,4 @@
+'use client';
 import {
   CCloseButton,
   COffcanvas,
@@ -5,7 +6,6 @@ import {
   COffcanvasHeader,
   COffcanvasTitle,
 } from '@coreui/react';
-import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { FaTrashAlt } from 'react-icons/fa';
 import { useContext } from 'react';
@@ -72,11 +72,6 @@ const ShopCart = () => {
       </COffcanvasBody>
     </COffcanvas>
   );
-};
-
-ShopCart.propTypes = {
-  visible: PropTypes.bool.isRequired,
-  setVisible: PropTypes.func.isRequired,
 };
 
 export default ShopCart;

@@ -15,9 +15,13 @@ import LogOut from '../LogOut';
 import Image from 'next/image';
 import ecommerce_logo from '@/assets/images/ecommerce_logo.png';
 import { navbarOptions } from '@/data/routes';
+import { FaShoppingBag } from 'react-icons/fa';
+import { ecommerceContext } from '@/context/FoodinglyContext';
+import { Badge } from '@mui/material';
 
 const HeaderNotes = ({ value }: any) => {
   const [visible, setVisible] = useState(false);
+  const { productsCart, setVisibleCart } = useContext(ecommerceContext);
 
   const renderOptions = () =>
     navbarOptions.map((option, index) => (
@@ -47,6 +51,16 @@ const HeaderNotes = ({ value }: any) => {
             <CNavbarNav className="me-auto mb-2 mb-lg-0">
               {renderOptions()}
             </CNavbarNav>
+
+            <div>
+              <CNavItem>
+                <button className="" onClick={() => setVisibleCart(true)}>
+                  <Badge badgeContent={productsCart.length} color="success">
+                    <FaShoppingBag />
+                  </Badge>
+                </button>
+              </CNavItem>
+            </div>
             <LogOut value={value} />
           </CCollapse>
         </CContainer>

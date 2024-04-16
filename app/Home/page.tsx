@@ -4,19 +4,17 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export default function homePage() {
+  const cookieStore = cookies();
 
-    const cookieStore = cookies();
+  const data = cookieStore.get('sb-fcybhjbilfsdcxkomjfk-auth-token');
 
-    const data = cookieStore.get('dataUser');
-
-    if(!data) return redirect("/login")
-
+  if (!data) return redirect('/login');
 
   return (
     <>
-      <HeaderNotes />
+      <HeaderNotes value={data.value} />
       <div>home</div>
-      <Products/>
+      <Products />
     </>
   );
 }

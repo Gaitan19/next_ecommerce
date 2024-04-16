@@ -1,19 +1,51 @@
-import DeployButton from '../DeployButton';
-import AuthButton from '../AuthButton';
+'use client';
 
-const HeaderNotes = () => {
+import {
+  CCollapse,
+  CContainer,
+  CNavItem,
+  CNavLink,
+  CNavbar,
+  CNavbarBrand,
+  CNavbarNav,
+  CNavbarToggler,
+} from '@coreui/react';
+import { useState } from 'react';
+import LogOut from '../LogOut';
+
+const HeaderNotes = ({ value }: any) => {
+  const [visible, setVisible] = useState(false);
+
   return (
-    <header className="bg-gray-100 border-b border-gray-200 py-4 w-full">
-      <div className="container mx-auto">
-        <nav className="flex justify-between items-center">
-          <div className="flex items-center">
-            <span className="hidden sm:block text-2xl font-bold text-black">My Notes</span>
-          </div>
-          <div className="flex items-center space-x-8">
-            <AuthButton />
-          </div>
-        </nav>
-      </div>
+    <header className="w-full">
+      <CNavbar expand="lg" className="bg-body-tertiary">
+        <CContainer fluid>
+          <CNavbarToggler
+            aria-label="Toggle navigation"
+            aria-expanded={visible}
+            onClick={() => setVisible(!visible)}
+          />
+          <CCollapse className="navbar-collapse" visible={visible}>
+            <CNavbarBrand href="#">Hidden brand</CNavbarBrand>
+            <CNavbarNav className="me-auto mb-2 mb-lg-0">
+              <CNavItem>
+                <CNavLink href="#" active>
+                  Home
+                </CNavLink>
+              </CNavItem>
+              <CNavItem>
+                <CNavLink href="#">Link</CNavLink>
+              </CNavItem>
+              <CNavItem>
+                <CNavLink href="#" disabled>
+                  Disabled
+                </CNavLink>
+              </CNavItem>
+            </CNavbarNav>
+            <LogOut value={value} />
+          </CCollapse>
+        </CContainer>
+      </CNavbar>
     </header>
   );
 };

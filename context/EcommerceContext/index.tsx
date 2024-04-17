@@ -36,8 +36,11 @@ const EcommerceContext = ({ children }: { children: React.ReactNode }) => {
 
   const handleProductQuantity = (id: any, value: any) => {
     const tempProducts = [...productsCart];
-    const productIndex = tempProducts.findIndex((product) => product.id === id);
+    const productIndex = tempProducts.findIndex(
+      (product) => product.id === parseInt(id, 10)
+    );
 
+    console.log(productIndex);
     if (productIndex !== -1) {
       tempProducts[productIndex].quantity = value;
       setProductsCart(tempProducts);

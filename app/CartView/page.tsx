@@ -1,3 +1,4 @@
+import CheckoutOrder from '@/components/CheckOutOrder';
 import HeaderEcommerce from '@/components/HeaderEcommerce';
 import TableView from '@/components/TableView';
 import { cookies } from 'next/headers';
@@ -15,7 +16,12 @@ export default function cartPage() {
       <HeaderEcommerce value={data.value} />
       <section>
         <div className="container">
-          <TableView />
+          <div className="wrapper flex flex-col gap-40">
+            <TableView />
+            <div>
+              <CheckoutOrder />
+            </div>
+          </div>
         </div>
       </section>
     </>

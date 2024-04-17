@@ -11,6 +11,8 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { useContext } from 'react';
 import { ecommerceContext } from '@/context/EcommerceContext';
 import { ICartProduct } from '@/models/productsModel';
+import Link from 'next/link';
+import { routes } from '@/data/routes';
 
 const ShopCart = () => {
   const {
@@ -65,9 +67,9 @@ const ShopCart = () => {
               <span className="">{`$ ${getTotalPrice()}`}</span>
             </div>
           </div>
-          <button type="button">
-            <span className="">Checkout</span>
-          </button>
+          <Link href={routes.cartView}>
+            <span className="">Go to Cart</span>
+          </Link>
         </div>
       </COffcanvasBody>
     </COffcanvas>

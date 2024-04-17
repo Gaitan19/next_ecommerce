@@ -1,4 +1,5 @@
 import HeaderEcommerce from '@/components/HeaderEcommerce';
+import TableView from '@/components/TableView';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -12,7 +13,11 @@ export default function cartPage() {
   return (
     <>
       <HeaderEcommerce value={data.value} />
-      <div>cart view</div>
+      <section>
+        <div className="container">
+          <TableView />
+        </div>
+      </section>
     </>
   );
 }

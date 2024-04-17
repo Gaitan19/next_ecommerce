@@ -10,5 +10,5 @@ export interface IProduct {
 }
 
 export interface ICartProduct extends IProduct {
-  quantity?: number;
+  quantity: number;
 }

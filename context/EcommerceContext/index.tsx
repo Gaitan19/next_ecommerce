@@ -8,8 +8,10 @@ const defaultContextValue = {
   visibleCart: false,
   setVisibleCart: (value: boolean) => {},
   productsCart: [],
+  userData: {},
   addProductCart: (product: IProduct) => {},
   deleteProductCart: (product: IProduct) => {},
+  deleteCart: () => {},
   handleProductQuantity: (id: any, value: any) => {},
   getTotalPrice: () => 0,
 };
@@ -19,6 +21,7 @@ const ecommerceContext = createContext(defaultContextValue);
 const EcommerceContext = ({ children }: { children: React.ReactNode }) => {
   const [visibleCart, setVisibleCart] = useState(false);
   const [productsCart, setProductsCart] = useLocalStorage('productsCartE', []);
+  const [userData, setUserData] = useLocalStorage('UserData', '');
 
   const addProductCart = (product: IProduct) => {
     const newCartProduct = { ...product, quantity: 1 };
@@ -32,6 +35,10 @@ const EcommerceContext = ({ children }: { children: React.ReactNode }) => {
     );
 
     setProductsCart(filterProducts);
+  };
+
+  const deleteCart = async () => {
+    await setProductsCart([]);
   };
 
   const handleProductQuantity = (id: any, value: any) => {
@@ -64,6 +71,8 @@ const EcommerceContext = ({ children }: { children: React.ReactNode }) => {
         deleteProductCart,
         handleProductQuantity,
         getTotalPrice,
+        userData,
+        deleteCart,
       }}
     >
       {children}

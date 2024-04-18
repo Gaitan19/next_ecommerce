@@ -69,10 +69,47 @@ class Orders {
         )
         `
         )
-        .eq('id', order.id);
+        .eq('id', order.id)
+        .single();
     } catch (error: any) {
       throw new Error(error.message);
     }
+  }
+
+  async getOrder(): Promise<void> {
+    const { data: orderDetail } = await supabase
+      .from('order')
+      .select(
+        `id, 
+    created_at, 
+    orderDetails(
+        id, 
+        product(
+            id, 
+            created_at,
+            title,
+            description,
+            price,
+            stock,
+            category,
+            thumbnail,
+        ),
+        quantity
+         
+    )
+    user(
+        id,
+        created_at,
+        email,
+        password,
+        address,
+        tel,
+    )
+    `
+      )
+      .eq('id', 1)
+      .single();
+    console.log('orderDetail :>> ', orderDetail);
   }
 }
 

@@ -1,4 +1,5 @@
 import CheckoutOrder from '@/components/CheckOutOrder';
+import FormCheck from '@/components/FormCheck';
 import HeaderEcommerce from '@/components/HeaderEcommerce';
 import TableView from '@/components/TableView';
 import { cookies } from 'next/headers';
@@ -20,6 +21,7 @@ export default function cartPage() {
             <TableView />
             <div>
               <CheckoutOrder />
+              <FormCheck />
             </div>
           </div>
         </div>

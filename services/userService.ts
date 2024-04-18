@@ -4,19 +4,23 @@ import { createClient } from '@/utils/supabase/server';
 const supabase = createClient();
 
 class User {
-  async getUser(email: string): Promise<IUser> {
+  async getUser(): Promise<IUser> {
     try {
-      const { error, data: user } = await supabase
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      const { error, data: userData } = await supabase
         .from('user')
         .select()
-        .eq('email', email)
+        .eq('email', user?.email)
         .single();
 
       if (error) {
         throw new Error("couldn't read user");
       }
 
-      return user;
+      return userData;
     } catch (error: any) {
       throw new Error(error.message);
     }

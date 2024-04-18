@@ -7,13 +7,13 @@ class User {
   async getUser(email: string): Promise<IUser> {
     try {
       const { error, data: user } = await supabase
-        .from('users')
+        .from('user')
         .select()
         .eq('email', email)
         .single();
 
       if (error) {
-        throw new Error("couldn't read product");
+        throw new Error("couldn't read user");
       }
 
       return user;

@@ -1,3 +1,4 @@
+import { saveOrder } from '@/actions/saveOrder';
 import { paymentMethods } from '@/data/cartViewData';
 import { userService } from '@/services/userService';
 import { v4 } from 'uuid';
@@ -12,7 +13,7 @@ const FormCheck = async () => {
           className="Checkout-radio"
           id={paymentMethod}
           type="radio"
-          name="Payment methods"
+          name="PaymentMethods"
           required
         />
         <label className="Checkout-label" htmlFor={paymentMethod}>
@@ -42,7 +43,7 @@ const FormCheck = async () => {
           </label>
           <input
             className="rounded-md px-4 py-2 bg-inherit border mb-6"
-            name="ship_address"
+            name="shipping_address"
             placeholder="Shipping Address"
             required
           />
@@ -54,6 +55,7 @@ const FormCheck = async () => {
       <button
         type="submit"
         className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2 text-center"
+        formAction={saveOrder}
       >
         Place Order
       </button>

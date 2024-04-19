@@ -10,26 +10,9 @@ export const saveOrder = async (formData: FormData) => {
   const shippingAddress = formData.get('shipping_address') as string;
 
   const supabase = createClient();
-  const cookieStore = cookies();
+  console.log('hola :>> ');
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
-    return redirect('/login?message=Could not authenticate user');
-  }
-
-  const response = await supabase
-    .from('user')
-    .select()
-    .eq('email', email)
-    .single();
-
-  if (!response.error) {
-    cookieStore.set('dataUser', JSON.stringify(response.data));
-  }
-
-  return redirect('/Home');
+  // if (error) {
+  // return redirect('/CartView?message=Could not authenticate user');
+  // }
 };

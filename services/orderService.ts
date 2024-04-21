@@ -1,115 +1,57 @@
 import { IOrderDto } from "@/models/ordersModel";
 import { ICartProduct } from "@/models/productsModel";
 import { createClient } from "@/utils/supabase/server";
+import { cartService } from "./cartService";
+import { IIProduct, cartDetailsService } from "./cartDetailsService";
+import { productsService } from "./products";
 
 const supabase = createClient();
 
 class Orders {
-  async saveOrder(products: ICartProduct[], details: IOrderDto): Promise<void> {
+  async handleSaveOrder(
+    userId: number,
+    userEmail: string,
+    address: string,
+    paymentMethod: string,
+    total: number
+  ): Promise<void> {
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const cart = await cartService.getCart(userEmail);
+      if (!cart) throw new Error("failed");
 
-      const { data: order, error } = await supabase
+      const { data: orderData, error } = await supabase
         .from("orders")
         .insert([
           {
-            total: details.total,
-            shipping_address: details.shipping_address,
-            payment_method: details.payment_method,
-            order_status: details.order_status,
-            user_email: user?.email,
+            user_id: userId,
+            cart_id: cart.id,
+            total,
+            shipping_address: address,
+            payment_method: paymentMethod,
           },
         ])
         .select()
         .single();
 
-      if (error) throw Error("couldn't save order");
+      console.log("orderData>>", orderData);
+      console.log("error :>> ", error);
 
-      products.forEach(async (product) => {
-        const { data: orderProduct, error } = await supabase
-          .from("order_details")
-          .insert([
-            {
-              order_id: order.id,
-              product_id: product.id,
-              quantity: product.quantity,
-            },
-          ]);
+      if (error) throw new Error("Failed");
+
+      const productsOnOrder = await cartDetailsService.getProductsCart(
+        userEmail
+      );
+
+      productsOnOrder.forEach(async (productOrder: IIProduct) => {
+        await productsService.sellProduct(
+          productOrder.products.id,
+          productOrder.products.stock - productOrder.quantity
+        );
       });
-
-      const { data: orderDetail } = await supabase
-        .from("order")
-        .select(
-          `id, 
-        created_at, 
-        orderDetails(
-            id, 
-            product(
-                id, 
-                created_at,
-                title,
-                description,
-                price,
-                stock,
-                category,
-                thumbnail,
-            ),
-            quantity
-             
-        )
-        user(
-            id,
-            created_at,
-            email,
-            password,
-            address,
-            tel,
-        )
-        `
-        )
-        .eq("id", order.id)
-        .single();
     } catch (error: any) {
       throw new Error(error.message);
     }
   }
-
-  async getOrder(): Promise<void> {
-    const { data: orderDetail } = await supabase
-      .from("order")
-      .select(
-        `id, 
-    created_at, 
-    orderDetails(
-        id, 
-        product(
-            id, 
-            created_at,
-            title,
-            description,
-            price,
-            stock,
-            category,
-            thumbnail,
-        ),
-        quantity
-         
-    )
-    user(
-        id,
-        created_at,
-        email,
-        password,
-        address,
-        tel,
-    )
-    `
-      )
-      .eq("id", 1)
-      .single();
-  }
 }
 
-export const productsService = new Orders();
+export const orderService = new Orders();

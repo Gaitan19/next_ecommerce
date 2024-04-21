@@ -1,6 +1,6 @@
-import { IProduct } from '@/models/productsModel';
-import { TPoduct, TPoducts } from '@/types/types';
-import { createClient } from '@/utils/supabase/server';
+import { IProduct } from "@/models/productsModel";
+import { TPoduct, TPoducts } from "@/types/types";
+import { createClient } from "@/utils/supabase/server";
 
 const supabase = createClient();
 
@@ -8,9 +8,9 @@ class Products {
   async getAllProducts(): Promise<TPoducts> {
     try {
       const { error, data: products } = await supabase
-        .from('products')
+        .from("products")
         .select()
-        .order('id', { ascending: true });
+        .order("id", { ascending: true });
 
       if (error) {
         throw new Error("couldn't read products");
@@ -22,12 +22,12 @@ class Products {
     }
   }
 
-  async sellProduct(id: number, quantity: number): Promise<TPoduct> {
+  async sellProduct(id: number, newStock: number): Promise<TPoduct> {
     try {
       const { error, data: product } = await supabase
-        .from('products')
-        .update({ stock: quantity })
-        .eq('id', id)
+        .from("products")
+        .update({ stock: newStock })
+        .eq("id", id)
         .select()
         .single();
 

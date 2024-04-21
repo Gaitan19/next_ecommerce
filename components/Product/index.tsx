@@ -1,15 +1,11 @@
-// import { ecommerceContext } from '@/context/EcommerceContext';
-// import { handleAdd } from '@/actions/addCartProducts';
-import { IProduct } from '@/models/productsModel';
-import { cartDetailsService } from '@/services/cartDetailsService';
-// import { cartDetailsService } from '@/services/cartDetailsService';
-import Image from 'next/image';
-import ButtonAdd from './ButtonAdd';
-import { handleAdd } from '@/actions/addCartProducts';
-// import { useContext } from 'react';
+import { IProduct } from "@/models/productsModel";
+import { cartDetailsService } from "@/services/cartDetailsService";
+import Image from "next/image";
+import ButtonAdd from "./ButtonAdd";
+import { handleAdd } from "@/actions/addCartProducts";
 
-interface IIProducts extends IProduct{
-  email:string
+interface IIProducts extends IProduct {
+  email: string;
 }
 
 const Product = async ({
@@ -21,10 +17,8 @@ const Product = async ({
   price,
   stock,
   created_at,
-  email
+  email,
 }: IIProducts) => {
-  // const { addProductCart, deleteProductCart, productsCart } =
-  //   useContext(ecommerceContext);
   const product: IProduct = {
     id,
     thumbnail,
@@ -36,27 +30,7 @@ const Product = async ({
     created_at,
   };
 
-
-  
-
-  // const productsCart = await cartDetailsService.getProductsCart()
-
-  const isCartProduct = await cartDetailsService.isCartProduct(title,email)
-
-
-  // const isCartproduct =
-  //   productsCart.some((productCart: IProduct) => productCart.id === id) ||
-  //   false;
-
-  // const isCartproduct = false;
-
-  // const handleAdd =  () => {
-  
-  //   // isCartproduct ? deleteProductCart(product) : addProductCart(product);
-  
-  //   console.log("hola");
-  // };
-  
+  const isCartProduct = await cartDetailsService.isCartProduct(title, email);
 
   return (
     <article className="border-solid border-2 overflow-hidden">
@@ -70,17 +44,13 @@ const Product = async ({
         <span>{stock}</span>
       </div>
       <div>
-        {/* formAction={handleAdd} */}
-        <ButtonAdd action={handleAdd} email={email} text={`${isCartProduct ? "Delete From Cart" : "Add To Cart"}`} isCartProduct={isCartProduct} productId={id}/>
-          {/* {isCartproduct ? 'Delete From Cart' : 'Add To Cart'} */}
-       
-
-
-          {/* <button onClick={handleAdd} className="border-solid border-2"> */}
-          {/* {isCartproduct ? 'Delete From Cart' : 'Add To Cart'} */}
-        {/* add */}
-        {/* </button> */}
-
+        <ButtonAdd
+          action={handleAdd}
+          email={email}
+          text={`${isCartProduct ? "Delete From Cart" : "Add To Cart"}`}
+          isCartProduct={isCartProduct}
+          productId={id}
+        />
         <span>{price}</span>
       </div>
     </article>

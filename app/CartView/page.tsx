@@ -12,13 +12,15 @@ export default function cartPage() {
 
   if (!data) return redirect('/login');
 
+  const { user } = JSON.parse(data.value);
+
   return (
     <>
       <HeaderEcommerce value={data.value} />
       <section>
         <div className="container">
           <div className="wrapper flex flex-col gap-40">
-            <TableView />
+            <TableView email={user.email}/>
             <div>
               <CheckoutOrder />
               <FormCheck />

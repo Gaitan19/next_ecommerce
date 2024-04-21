@@ -11,8 +11,6 @@ class Cart {
         .select()
         .eq("email", email)
         .single();
-      console.log("email :>> ", email);
-      console.log("userData :>> ", userData);
 
       const { data: shoppingCart, error } = await supabase
         .from("shopping_carts")

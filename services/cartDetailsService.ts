@@ -1,8 +1,14 @@
+import { IProduct } from "@/models/productsModel";
 import { ICartDetails } from "@/models/cartDetailsModel";
 import { createClient } from "@/utils/supabase/server";
 import { cartService } from "./cartService";
 
 const supabase = createClient();
+
+interface IIProduct {
+  id: number;
+  products: IProduct;
+}
 
 class CartDetailService {
   async addToCart(
@@ -102,6 +108,45 @@ class CartDetailService {
     if (error) return false;
 
     return true;
+  }
+
+  async getProductsCart(email: string): Promise<IIProduct[] | void> {
+    try {
+      const cart = await cartService.getCart(email);
+      if (!cart) throw new Error("failed");
+
+      const { data: productCarts } = await supabase
+        .from("shopping_carts")
+        .select(
+          `
+          id,
+          created_at,
+          cart_details(
+            id,
+            products(
+              id,
+              created_at,
+              title,
+              description,
+              price,
+              stock,
+              category,
+              thumbnail
+            )
+          )
+          `
+        )
+        .eq("id", cart.id)
+        .single();
+
+      if (!productCarts) throw new Error("Failed");
+
+      const { cart_details } = productCarts;
+
+      return cart_details as unknown as IIProduct[];
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   }
 }
 

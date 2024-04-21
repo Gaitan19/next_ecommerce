@@ -43,7 +43,6 @@ const Product = async ({
 
   const isCartProduct = await cartDetailsService.isCartProduct(title,email)
 
-console.log('isCartProduct :>> ', isCartProduct);
 
   // const isCartproduct =
   //   productsCart.some((productCart: IProduct) => productCart.id === id) ||
@@ -72,7 +71,7 @@ console.log('isCartProduct :>> ', isCartProduct);
       </div>
       <div>
         {/* formAction={handleAdd} */}
-        <ButtonAdd action={handleAdd} text={`${isCartProduct ? "Delete From Cart" : "Add To Cart"}`} />
+        <ButtonAdd action={handleAdd} email={email} text={`${isCartProduct ? "Delete From Cart" : "Add To Cart"}`} isCartProduct={isCartProduct} productId={id}/>
           {/* {isCartproduct ? 'Delete From Cart' : 'Add To Cart'} */}
        
 

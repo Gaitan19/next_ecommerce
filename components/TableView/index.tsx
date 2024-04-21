@@ -1,22 +1,22 @@
 // 'use client';
-import { v4 } from 'uuid';
+import { v4 } from "uuid";
 // import { useContext } from 'react';
-import { FaRegTrashAlt } from 'react-icons/fa';
-import Image from 'next/image';
+import { FaRegTrashAlt } from "react-icons/fa";
+import Image from "next/image";
 // import { ecommerceContext } from '@/context/EcommerceContext';
-import { tableHeaders } from '@/data/cartViewData';
-import { ICartProduct } from '@/models/productsModel';
-import { cartDetailsService } from '@/services/cartDetailsService';
+import { tableHeaders } from "@/data/cartViewData";
+import { ICartProduct } from "@/models/productsModel";
+import { IIProduct, cartDetailsService } from "@/services/cartDetailsService";
+import ButtonTrash from "./ButtonTrash";
+import { handleDelete } from "@/actions/deleteCartProduct";
 
-const TableView = async ({email}:any) => {
+const TableView = async ({ email }: any) => {
   // const { productsCart, deleteProductCart, handleProductQuantity } =
   //   useContext(ecommerceContext);
 
+  const productsCart = await cartDetailsService.getProductsCart(email);
 
-  const productsCart = await cartDetailsService.getProductsCart(email)
-
-
-console.log('productsCart :>> ', productsCart);
+  console.log("productsCart :>> ", productsCart);
 
   const getTotalFood = (quantity: number, price: number) => quantity * price;
 
@@ -35,45 +35,49 @@ console.log('productsCart :>> ', productsCart);
       </th>
     ));
 
-  // const renderTableBody = () =>
-  //   productsCart.map((productCart: ICartProduct) => (
-  //     <tr key={productCart.id} className="View-table-rows">
-  //       <td className="View-table-item">
-  //         <button
-  //           className="View-trash"
-  //           // onClick={() => deleteProductCart(productCart)}
-  //         >
-  //           <FaRegTrashAlt />
-  //         </button>
-  //       </td>
+  const renderTableBody = () =>
+    productsCart.map((productCart: IIProduct) => (
+      <tr key={productCart.id} className="View-table-rows">
+        <td className="View-table-item">
+            <ButtonTrash
+            action={handleDelete}
+            email={email}
+            productId={productCart.products.id}
+              // onClick={() => deleteProductCart(productCart)}
+            >
+              <FaRegTrashAlt />
+            </ButtonTrash>
+        </td>
 
-  //       <td className="View-table-image">
-  //         <Image
-  //           className="View-image"
-  //           width={92}
-  //           height={92}
-  //           alt={productCart.title}
-  //           src={productCart.thumbnail}
-  //         />
-  //       </td>
+        <td className="View-table-image">
+          <Image
+            className="View-image"
+            width={92}
+            height={92}
+            alt={productCart.products.title}
+            src={productCart.products.thumbnail}
+          />
+        </td>
 
-  //       <td className="View-table-name">{productCart.title}</td>
-  //       <td className="View-table-price">{`$${productCart.price}`}</td>
-  //       <td className="View-table-quantity">
-  //         Quantity
-  //         <input
-  //           className="View-input-quantity"
-  //           id={`${productCart.id}`}
-  //           type="number"
-  //           defaultValue={productCart.quantity}
-  //           min={1}
-  //           max={productCart.stock}
-  //           onChange={handleOnchangeQuantity}
-  //         />
-  //       </td>
-  //       <td>${getTotalFood(productCart.quantity, productCart.price)}</td>
-  //     </tr>
-  //   ));
+        <td className="View-table-name">{productCart.products.title}</td>
+        <td className="View-table-price">{`$${productCart.products.price}`}</td>
+        <td className="View-table-quantity">
+          Quantity
+          <input
+            className="View-input-quantity"
+            id={`${productCart.id}`}
+            type="number"
+            defaultValue={productCart.quantity}
+            min={1}
+            max={productCart.products.stock}
+            // onChange={handleOnchangeQuantity}
+          />
+        </td>
+        <td>
+          ${getTotalFood(productCart.quantity, productCart.products.price)}
+        </td>
+      </tr>
+    ));
 
   return (
     <div className="View-container-table">
@@ -81,7 +85,7 @@ console.log('productsCart :>> ', productsCart);
         <thead className="View-table-headers">
           <tr>{renderTableHeaders()}</tr>
         </thead>
-        {/* <tbody>{renderTableBody()}</tbody> */}
+        <tbody>{renderTableBody()}</tbody>
       </table>
     </div>
   );

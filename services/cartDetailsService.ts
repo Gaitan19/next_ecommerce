@@ -5,9 +5,10 @@ import { cartService } from "./cartService";
 
 const supabase = createClient();
 
-interface IIProduct {
+export interface IIProduct {
   id: number;
   products: IProduct;
+  quantity: number;
 }
 
 class CartDetailService {
@@ -110,7 +111,7 @@ class CartDetailService {
     return true;
   }
 
-  async getProductsCart(email: string): Promise<IIProduct[] | void> {
+  async getProductsCart(email: string): Promise<IIProduct[]> {
     try {
       const cart = await cartService.getCart(email);
       if (!cart) throw new Error("failed");
@@ -123,6 +124,7 @@ class CartDetailService {
           created_at,
           cart_details(
             id,
+            quantity,
             products(
               id,
               created_at,

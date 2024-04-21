@@ -2,10 +2,9 @@ import { IProduct } from '@/models/productsModel';
 import { productsService } from '@/services/products';
 import { TPoducts } from '@/types/types';
 import { alertMessage } from '../Alert';
-import Image from 'next/image';
 import Product from '../Product';
 
-const ProductsGrid = async () => {
+const ProductsGrid = async ({email}:any) => {
   const renderProducts = async () => {
     try {
       const products: TPoducts = await productsService.getAllProducts();
@@ -23,6 +22,7 @@ const ProductsGrid = async () => {
             stock={product.stock}
             thumbnail={product.thumbnail}
             key={product.id}
+            email={email}
           />
         );
       });

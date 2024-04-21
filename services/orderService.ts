@@ -1,6 +1,6 @@
-import { IOrderDto } from '@/models/ordersModel';
-import { ICartProduct } from '@/models/productsModel';
-import { createClient } from '@/utils/supabase/server';
+import { IOrderDto } from "@/models/ordersModel";
+import { ICartProduct } from "@/models/productsModel";
+import { createClient } from "@/utils/supabase/server";
 
 const supabase = createClient();
 
@@ -12,7 +12,7 @@ class Orders {
       } = await supabase.auth.getUser();
 
       const { data: order, error } = await supabase
-        .from('orders')
+        .from("orders")
         .insert([
           {
             total: details.total,
@@ -29,7 +29,7 @@ class Orders {
 
       products.forEach(async (product) => {
         const { data: orderProduct, error } = await supabase
-          .from('order_details')
+          .from("order_details")
           .insert([
             {
               order_id: order.id,
@@ -40,7 +40,7 @@ class Orders {
       });
 
       const { data: orderDetail } = await supabase
-        .from('order')
+        .from("order")
         .select(
           `id, 
         created_at, 
@@ -69,7 +69,7 @@ class Orders {
         )
         `
         )
-        .eq('id', order.id)
+        .eq("id", order.id)
         .single();
     } catch (error: any) {
       throw new Error(error.message);
@@ -78,7 +78,7 @@ class Orders {
 
   async getOrder(): Promise<void> {
     const { data: orderDetail } = await supabase
-      .from('order')
+      .from("order")
       .select(
         `id, 
     created_at, 
@@ -107,9 +107,8 @@ class Orders {
     )
     `
       )
-      .eq('id', 1)
+      .eq("id", 1)
       .single();
-    console.log('orderDetail :>> ', orderDetail);
   }
 }
 

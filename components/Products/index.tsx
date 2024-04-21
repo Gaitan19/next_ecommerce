@@ -1,13 +1,16 @@
-import { createClient } from '@/utils/supabase/client';
+
 import ProductsGrid from './ProductsGrid';
 
-const Products = () => {
-  const supabase = createClient();
+const Products = ({data}:any) => {
+
+
+  const { user } = JSON.parse(data);
+
 
   return (
     <section>
       <div className="container">
-        <ProductsGrid />
+        <ProductsGrid email={user.email} />
       </div>
     </section>
   );

@@ -13,7 +13,7 @@ export default function homePage() {
   return (
     <>
       <HeaderEcommerce value={data.value} />
-      <Products />
+      <Products data={data.value}/>
     </>
   );
 }

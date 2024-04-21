@@ -72,12 +72,14 @@ const TableView = async ({ email }: any) => {
 
   return (
     <div className="View-container-table">
-      <table className="View-table">
-        <thead className="View-table-headers">
-          <tr>{renderTableHeaders()}</tr>
-        </thead>
-        <tbody>{renderTableBody()}</tbody>
-      </table>
+      {productsCart.length !== 0 && (
+        <table className="View-table">
+          <thead className="View-table-headers">
+            <tr>{renderTableHeaders()}</tr>
+          </thead>
+          <tbody>{renderTableBody()}</tbody>
+        </table>
+      )}
     </div>
   );
 };

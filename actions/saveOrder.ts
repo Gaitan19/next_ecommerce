@@ -28,9 +28,5 @@ export const saveOrder = async (formData: FormData) => {
     parseInt(totalValue)
   );
 
-  // revalidatePath("/CartView");
-
-  // if (error) {
-  // return redirect('/CartView?message=Could not authenticate user');
-  // }
+  revalidatePath("/CartView");
 };

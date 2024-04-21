@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { cartService } from "./cartService";
 import { IIProduct, cartDetailsService } from "./cartDetailsService";
 import { productsService } from "./products";
+import { logService } from "./logService";
 
 const supabase = createClient();
 
@@ -34,13 +35,16 @@ class Orders {
         .single();
 
       console.log("orderData>>", orderData);
-      console.log("error :>> ", error);
 
       if (error) throw new Error("Failed");
+
+      logService.saveLog(userId, orderData.id);
 
       const productsOnOrder = await cartDetailsService.getProductsCart(
         userEmail
       );
+
+      console.log("productsOnOrder :>> ", productsOnOrder);
 
       productsOnOrder.forEach(async (productOrder: IIProduct) => {
         await productsService.sellProduct(
@@ -48,6 +52,12 @@ class Orders {
           productOrder.products.stock - productOrder.quantity
         );
       });
+
+      const { data: newCart } = await supabase
+        .from("shopping_carts")
+        .insert([{ user_id: userId }])
+        .select()
+        .single();
     } catch (error: any) {
       throw new Error(error.message);
     }

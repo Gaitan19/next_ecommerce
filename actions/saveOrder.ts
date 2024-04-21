@@ -1,16 +1,20 @@
-import { createClient } from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { revalidatePath } from "next/cache";
 
 export const saveOrder = async (formData: FormData) => {
-  'use server';
+  "use server";
 
-  const email = formData.get('email') as string;
-  const paymentMethod = formData.get('PaymentMethods') as string;
-  const shippingAddress = formData.get('shipping_address') as string;
+  const email = formData.get("email") as string;
+  const paymentMethod = formData.get("PaymentMethods") as string;
+  const shippingAddress = formData.get("shipping_address") as string;
+  const totalValue = formData.get("totalValue") as string;
 
-  const supabase = createClient();
-  console.log('hola :>> ');
+  console.log("email>>", email);
+
+  console.log("paymentMethod :>> ", paymentMethod);
+  console.log("shippingAddress :>> ", shippingAddress);
+  console.log("totalValue :>> ", totalValue);
+
+  // revalidatePath("/CartView");
 
   // if (error) {
   // return redirect('/CartView?message=Could not authenticate user');

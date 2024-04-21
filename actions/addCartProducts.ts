@@ -8,10 +8,6 @@ export const handleAdd = async (formData: FormData) => {
   const isCartProduct = formData.get("isCartProduct") as string;
   const email = formData.get("email") as string;
 
-  console.log("productId :>> ", parseInt(productId));
-
-  console.log("isCartProduct :>> ", isCartProduct);
-
   isCartProduct === "false"
     ? cartDetailsService.addToCart(parseInt(productId), email)
     : cartDetailsService.deleteFromCart(parseInt(productId), email);

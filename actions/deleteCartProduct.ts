@@ -7,8 +7,6 @@ export const handleDelete = async (formData: FormData) => {
   const productId = formData.get("product") as string;
   const email = formData.get("email") as string;
 
-  console.log("email :>> ", email);
-  console.log("productId :>> ", productId);
   cartDetailsService.deleteFromCart(parseInt(productId), email);
 
   revalidatePath("/CartView");

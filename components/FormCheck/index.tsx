@@ -1,45 +1,44 @@
-import { saveOrder } from '@/actions/saveOrder';
-import { paymentMethods } from '@/data/cartViewData';
-import { userService } from '@/services/userService';
-import { v4 } from 'uuid';
+import { saveOrder } from "@/actions/saveOrder";
+import { paymentMethods } from "@/data/cartViewData";
+import { v4 } from "uuid";
 
-const FormCheck = async () => {
-  const user = await userService.getUser();
-
+const FormCheck = async ({ email, children }: any) => {
   const renderPaymentMethods = () =>
     paymentMethods.map((paymentMethod: string) => (
-      <div key={v4()} className="Checkout-container-methods">
-        <input
-          className="Checkout-radio"
-          id={paymentMethod}
-          type="radio"
-          name="PaymentMethods"
-          required
-        />
-        <label className="Checkout-label" htmlFor={paymentMethod}>
-          {paymentMethod}
-        </label>
-      </div>
+      // <div key={v4()} className="Checkout-container-methods">
+      //   <input
+      //     className="Checkout-radio"
+      //     id={paymentMethod}
+      //     type="radio"
+      //     name="PaymentMethods"
+      //     required
+      //   />
+      //   <label className="Checkout-label" htmlFor={paymentMethod}>
+      //     {paymentMethod}
+      //   </label>
+      // </div>
+
+      <option value={paymentMethod}>{paymentMethod}</option>
     ));
 
   return (
     <form>
+      {children}
+
       <div>
         <div>
-          <label className="text-md" htmlFor="email">
-            Email
-          </label>
+          <label className="text-md">Email:</label>
           <input
             className="rounded-md px-4 py-2 bg-inherit border mb-6"
-            value={user.email}
+            value={email}
             name="email"
-            disabled
+            readOnly
           />
         </div>
 
         <div>
           <label className="text-md" htmlFor="shipping_address">
-            Shipping Address
+            Shipping Address:
           </label>
           <input
             className="rounded-md px-4 py-2 bg-inherit border mb-6"
@@ -48,9 +47,16 @@ const FormCheck = async () => {
             required
           />
         </div>
-      </div>
 
-      <div>{renderPaymentMethods()}</div>
+        <div>
+          <label className="text-md" htmlFor="PaymentMethods">
+            Paymenth Methods:
+          </label>
+          <select name="PaymentMethods" defaultValue={paymentMethods} required>
+            {renderPaymentMethods()}
+          </select>
+        </div>
+      </div>
 
       <button
         type="submit"

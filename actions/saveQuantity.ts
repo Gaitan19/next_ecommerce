@@ -7,7 +7,6 @@ export const handleQuantity = async (formData: FormData) => {
   const productId = formData.get("product") as string;
   const newQuantity = formData.get("newQuantity") as string;
 
-  console.log("productId :>> ", productId);
   cartDetailsService.handleNewQuantity(
     parseInt(productId),
     parseInt(newQuantity)

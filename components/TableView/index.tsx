@@ -1,11 +1,7 @@
-// 'use client';
 import { v4 } from "uuid";
-// import { useContext } from 'react';
 import { FaRegTrashAlt } from "react-icons/fa";
 import Image from "next/image";
-// import { ecommerceContext } from '@/context/EcommerceContext';
 import { tableHeaders } from "@/data/cartViewData";
-import { ICartProduct } from "@/models/productsModel";
 import { IIProduct, cartDetailsService } from "@/services/cartDetailsService";
 import ButtonTrash from "./ButtonTrash";
 import { handleDelete } from "@/actions/deleteCartProduct";
@@ -13,22 +9,9 @@ import ButtonSaveQuantity from "./ButtonSaveQuantity";
 import { handleQuantity } from "@/actions/saveQuantity";
 
 const TableView = async ({ email }: any) => {
-  // const { productsCart, deleteProductCart, handleProductQuantity } =
-  //   useContext(ecommerceContext);
-
   const productsCart = await cartDetailsService.getProductsCart(email);
 
-  console.log("productsCart :>> ", productsCart);
-
   const getTotalFood = (quantity: number, price: number) => quantity * price;
-
-  const handleOnchangeQuantity = (event: any) => {
-    const {
-      target: { value, id },
-    } = event;
-
-    // handleProductQuantity(id, value);
-  };
 
   const renderTableHeaders = () =>
     tableHeaders.map((tableHeader) => (
@@ -45,7 +28,6 @@ const TableView = async ({ email }: any) => {
             action={handleDelete}
             email={email}
             productId={productCart.products.id}
-            // onClick={() => deleteProductCart(productCart)}
           >
             <FaRegTrashAlt />
           </ButtonTrash>
@@ -74,7 +56,6 @@ const TableView = async ({ email }: any) => {
               min={1}
               name="newQuantity"
               max={productCart.products.stock}
-              // onChange={handleOnchangeQuantity}
             />
             <ButtonSaveQuantity
               text="save"

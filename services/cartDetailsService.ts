@@ -145,7 +145,26 @@ class CartDetailService {
 
       const { cart_details } = productCarts;
 
-      return cart_details as unknown as IIProduct[];
+      const dataCartDetails = cart_details.sort(
+        (a: any, b: any) => a.id - b.id
+      );
+
+      return dataCartDetails as unknown as IIProduct[];
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
+
+  async handleNewQuantity(
+    productId: number,
+    newQuantity: Number
+  ): Promise<void> {
+    try {
+      const { data, error } = await supabase
+        .from("cart_details")
+        .update({ quantity: newQuantity })
+        .eq("id", productId)
+        .select();
     } catch (error: any) {
       throw new Error(error.message);
     }

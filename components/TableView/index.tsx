@@ -9,6 +9,8 @@ import { ICartProduct } from "@/models/productsModel";
 import { IIProduct, cartDetailsService } from "@/services/cartDetailsService";
 import ButtonTrash from "./ButtonTrash";
 import { handleDelete } from "@/actions/deleteCartProduct";
+import ButtonSaveQuantity from "./ButtonSaveQuantity";
+import { handleQuantity } from "@/actions/saveQuantity";
 
 const TableView = async ({ email }: any) => {
   // const { productsCart, deleteProductCart, handleProductQuantity } =
@@ -39,14 +41,14 @@ const TableView = async ({ email }: any) => {
     productsCart.map((productCart: IIProduct) => (
       <tr key={productCart.id} className="View-table-rows">
         <td className="View-table-item">
-            <ButtonTrash
+          <ButtonTrash
             action={handleDelete}
             email={email}
             productId={productCart.products.id}
-              // onClick={() => deleteProductCart(productCart)}
-            >
-              <FaRegTrashAlt />
-            </ButtonTrash>
+            // onClick={() => deleteProductCart(productCart)}
+          >
+            <FaRegTrashAlt />
+          </ButtonTrash>
         </td>
 
         <td className="View-table-image">
@@ -63,15 +65,23 @@ const TableView = async ({ email }: any) => {
         <td className="View-table-price">{`$${productCart.products.price}`}</td>
         <td className="View-table-quantity">
           Quantity
-          <input
-            className="View-input-quantity"
-            id={`${productCart.id}`}
-            type="number"
-            defaultValue={productCart.quantity}
-            min={1}
-            max={productCart.products.stock}
-            // onChange={handleOnchangeQuantity}
-          />
+          <form>
+            <input
+              className="View-input-quantity"
+              id={`${productCart.id}`}
+              type="number"
+              defaultValue={productCart.quantity}
+              min={1}
+              name="newQuantity"
+              max={productCart.products.stock}
+              // onChange={handleOnchangeQuantity}
+            />
+            <ButtonSaveQuantity
+              text="save"
+              productId={productCart.id}
+              action={handleQuantity}
+            />
+          </form>
         </td>
         <td>
           ${getTotalFood(productCart.quantity, productCart.products.price)}

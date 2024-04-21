@@ -11,23 +11,7 @@ const ProductsGrid = async () => {
       const products: TPoducts = await productsService.getAllProducts();
       return products.map((product: IProduct) => {
         return (
-          // <article key={product.id} className="border-solid border-2">
-          //   <Image
-          //     width={200}
-          //     height={200}
-          //     src={product.thumbnail}
-          //     alt="product"
-          //   />
-          //   <h3>
-          //     {product.id}-{product.title}
-          //   </h3>
-          //   <p>{product.description}</p>
-          //   <div>
-          //     <span>{product.category}</span>
-          //     <span>{product.price}</span>
-          //     <span>{product.stock}</span>
-          //   </div>
-          // </article>
+          
 
           <Product
             id={product.id}

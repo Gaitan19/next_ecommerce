@@ -1,6 +1,6 @@
-import { createClient } from "@/utils/supabase/server";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import { createClient } from '@/utils/supabase/server';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export default async function AuthButton() {
   const supabase = createClient();
@@ -9,22 +9,35 @@ export default async function AuthButton() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const signOut = async () => {
-    "use server";
+  // const signOut = async () => {
+  //   'use server';
 
+  //   const supabase = createClient();
+  //   await supabase.auth.signOut();
+  //   return redirect('/login');
+  // };
+
+  const handleSignOut = () => {
     const supabase = createClient();
-    await supabase.auth.signOut();
-    return redirect("/login");
+    supabase.auth.signOut();
+    return redirect('/login');
   };
 
   return user ? (
     <div className="flex items-center gap-4">
       <span className="text-black">{user.email}</span>
-      <form action={signOut}>
+      {/* <form action={signOut}>
         <button className="py-2 px-4 rounded-md bg-gray-300 text-black hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
           Logout
         </button>
-      </form>
+      </form> */}
+
+      <button
+        onClick={handleSignOut}
+        className="py-2 px-4 rounded-md bg-gray-300 text-black hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+      >
+        Logout
+      </button>
     </div>
   ) : (
     <Link

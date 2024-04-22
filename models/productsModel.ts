@@ -8,3 +8,7 @@ export interface IProduct {
   category: string;
   thumbnail: string;
 }
+
+export interface ICartProduct extends IProduct {
+  quantity: number;
+}

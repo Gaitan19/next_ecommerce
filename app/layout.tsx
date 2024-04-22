@@ -2,9 +2,7 @@ import { GeistSans } from "geist/font/sans";
 import "@/styles/main.scss";
 import { Alert } from "@/components/Alert";
 import "react-toastify/dist/ReactToastify.css";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
-import HeaderNotes from "@/components/HeaderNotes";
+import "@coreui/coreui/dist/css/coreui.min.css";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`

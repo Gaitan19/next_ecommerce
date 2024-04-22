@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   CCollapse,
@@ -9,19 +9,15 @@ import {
   CNavbarBrand,
   CNavbarNav,
   CNavbarToggler,
-} from '@coreui/react';
-import { useContext, useState } from 'react';
-import LogOut from '../LogOut';
-import Image from 'next/image';
-import ecommerce_logo from '@/assets/images/ecommerce_logo.png';
-import { navbarOptions } from '@/data/routes';
-import { FaShoppingBag } from 'react-icons/fa';
-import { ecommerceContext } from '@/context/EcommerceContext';
-import { Badge } from '@mui/material';
+} from "@coreui/react";
+import { useState } from "react";
+import LogOut from "../LogOut";
+import Image from "next/image";
+import ecommerce_logo from "@/assets/images/ecommerce_logo.png";
+import { navbarOptions } from "@/data/routes";
 
 const HeaderNotes = ({ value }: any) => {
   const [visible, setVisible] = useState(false);
-  const { productsCart, setVisibleCart } = useContext(ecommerceContext);
 
   const renderOptions = () =>
     navbarOptions.map((option, index) => (
@@ -51,13 +47,7 @@ const HeaderNotes = ({ value }: any) => {
             <CNavbarNav className="me-auto mb-2 mb-lg-0">
               {renderOptions()}
             </CNavbarNav>
-
             <div className="flex gap-5">
-              <button className="" onClick={() => setVisibleCart(true)}>
-                <Badge badgeContent={productsCart.length} color="success">
-                  <FaShoppingBag />
-                </Badge>
-              </button>
               <LogOut value={value} />
             </div>
           </CCollapse>

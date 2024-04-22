@@ -1,19 +1,17 @@
-import { GeistSans } from 'geist/font/sans';
-import '@/styles/main.scss';
-import { Alert } from '@/components/Alert';
-import 'react-toastify/dist/ReactToastify.css';
-import '@coreui/coreui/dist/css/coreui.min.css';
-import { EcommerceContext } from '@/context/EcommerceContext';
-import ShopCart from '@/components/ShopCart';
+import { GeistSans } from "geist/font/sans";
+import "@/styles/main.scss";
+import { Alert } from "@/components/Alert";
+import "react-toastify/dist/ReactToastify.css";
+import "@coreui/coreui/dist/css/coreui.min.css";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3000';
+  : "http://localhost:3000";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase',
+  title: "Next.js and Supabase Starter Kit",
+  description: "The fastest way to build apps with Next.js and Supabase",
 };
 
 export default function RootLayout({
@@ -25,10 +23,7 @@ export default function RootLayout({
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
         <main className="min-h-screen flex flex-col items-center">
-          <EcommerceContext>
-            {children}
-            <ShopCart />
-          </EcommerceContext>
+          {children}
           <Alert />
         </main>
       </body>

@@ -12,7 +12,7 @@ interface IDataOrder {
   cart_id: number;
 }
 
-interface IDataHistory {
+export interface IDataHistory {
   id: number;
   user: IDataUser;
   order: IDataOrder;

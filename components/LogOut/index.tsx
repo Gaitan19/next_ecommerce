@@ -1,22 +1,18 @@
-import { ecommerceContext } from '@/context/EcommerceContext';
-import { createClient } from '@/utils/supabase/client';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useContext } from 'react';
+import { createClient } from "@/utils/supabase/client";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
 
 export default function LogOut({ value }: any) {
   const router = useRouter();
   const supabase = createClient();
 
-  const { deleteCart } = useContext(ecommerceContext);
-
   const { user } = JSON.parse(value);
 
   const handleSignOut = async () => {
     const supabase = createClient();
-    await deleteCart();
     await supabase.auth.signOut();
-    await router.push('/login');
+    await router.push("/login");
   };
 
   return (

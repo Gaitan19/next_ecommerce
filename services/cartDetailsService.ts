@@ -65,57 +65,30 @@ class CartDetailService {
   async isCartProduct(
     productName: string,
     email: string
-  ): Promise<boolean | any> {
+  ): Promise<boolean | void> {
     const cart = await cartService.getCart(email);
 
-    if (!cart) throw new Error("failed");
+    if (cart) {
+      const { data: productData } = await supabase
+        .from("products")
+        .select()
+        .eq("title", productName)
+        .single();
 
-    const { data: productData } = await supabase
-      .from("products")
-      .select()
-      .eq("title", productName)
-      .single();
+      const { data: productsCart, error } = await supabase
+        .from("cart_details")
+        .select()
+        .match({ cart_id: cart.id, product_id: productData.id })
+        .single();
 
-    const { data: productsCart, error } = await supabase
-      .from("cart_details")
-      .select()
-      .match({ cart_id: cart.id, product_id: productData.id })
-      .single();
+      if (error) return false;
 
-    /*
-        
-        
-        `
-          id,
-          created_at,
-          cart_id,
-          product_id,
-          quantity,
-        products(
-            id,
-            created_at,
-            title,
-            description,
-            price,
-            stock,
-            category,
-            thumbnail,
-            
-        )
-        `
-
-        */
-
-    if (error) return false;
-
-    return true;
+      return true;
+    }
   }
 
-  async getProductsCart(email: string): Promise<IIProduct[]> {
+  async handleGetProducts(cart_id: number): Promise<IIProduct[]> {
     try {
-      const cart = await cartService.getCart(email);
-      if (!cart) throw new Error("failed");
-
       const { data: productCarts } = await supabase
         .from("shopping_carts")
         .select(
@@ -138,7 +111,7 @@ class CartDetailService {
           )
           `
         )
-        .eq("id", cart.id)
+        .eq("id", cart_id)
         .single();
 
       if (!productCarts) throw new Error("Failed");
@@ -148,6 +121,19 @@ class CartDetailService {
       const dataCartDetails = cart_details.sort(
         (a: any, b: any) => a.id - b.id
       );
+
+      return dataCartDetails as unknown as IIProduct[];
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
+
+  async getProductsCart(email: string): Promise<IIProduct[]> {
+    try {
+      const cart = await cartService.getCart(email);
+      if (!cart) throw new Error("failed");
+
+      const dataCartDetails = await this.handleGetProducts(cart.id);
 
       return dataCartDetails as unknown as IIProduct[];
     } catch (error: any) {

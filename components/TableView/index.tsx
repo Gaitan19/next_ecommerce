@@ -81,7 +81,7 @@ const TableView = async ({ email, productsCart }: any) => {
     ));
 
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="bg-white rounded-lg shadow-lg overflow-auto">
       {productsCart?.length !== 0 && (
         <table className="w-full">
           <thead>

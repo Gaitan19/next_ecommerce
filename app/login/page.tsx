@@ -80,7 +80,7 @@ export default function Login({
           </SubmitButton>
           <Link
             href="/signUp"
-            className="w-full block text-center border border-gray-300 rounded-md px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300"
+            className="w-full block text-center border border-gray-300 rounded-md px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300 no-underline"
           >
             Sign Up
           </Link>

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   CCollapse,
@@ -9,12 +9,12 @@ import {
   CNavbarBrand,
   CNavbarNav,
   CNavbarToggler,
-} from "@coreui/react";
-import { useState } from "react";
-import LogOut from "../LogOut";
-import Image from "next/image";
-import ecommerce_logo from "@/assets/images/ecommerce_logo.png";
-import { navbarOptions } from "@/data/routes";
+} from '@coreui/react';
+import { useState } from 'react';
+import LogOut from '../LogOut';
+import Image from 'next/image';
+import ecommerce_logo from '@/assets/images/ecommerce_logo.png';
+import { navbarOptions } from '@/data/routes';
 
 const HeaderNotes = ({ value }: any) => {
   const [visible, setVisible] = useState(false);
@@ -48,7 +48,7 @@ const HeaderNotes = ({ value }: any) => {
               {renderOptions()}
             </CNavbarNav>
             <div className="flex gap-5">
-              <LogOut value={value} />
+              {value && <LogOut value={value} />}
             </div>
           </CCollapse>
         </CContainer>

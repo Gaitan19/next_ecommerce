@@ -1,12 +1,10 @@
-import { IOrderDto } from "@/models/ordersModel";
-import { ICartProduct } from "@/models/productsModel";
-import { createClient } from "@/utils/supabase/server";
-import { cartService } from "./cartService";
-import { IIProduct, cartDetailsService } from "./cartDetailsService";
-import { productsService } from "./products";
-import { logService } from "./logService";
-
-const supabase = createClient();
+import { IOrderDto } from '@/models/ordersModel';
+import { ICartProduct } from '@/models/productsModel';
+import { createClient } from '@/utils/supabase/server';
+import { cartService } from './cartService';
+import { IIProduct, cartDetailsService } from './cartDetailsService';
+import { productsService } from './products';
+import { logService } from './logService';
 
 class Orders {
   async handleSaveOrder(
@@ -17,11 +15,12 @@ class Orders {
     total: number
   ): Promise<void> {
     try {
+      const supabase = createClient();
       const cart = await cartService.getCart(userEmail);
-      if (!cart) throw new Error("failed");
+      if (!cart) throw new Error('failed');
 
       const { data: orderData, error } = await supabase
-        .from("orders")
+        .from('orders')
         .insert([
           {
             user_id: userId,
@@ -34,7 +33,7 @@ class Orders {
         .select()
         .single();
 
-      if (error) throw new Error("Failed");
+      if (error) throw new Error('Failed');
 
       logService.saveLog(userId, orderData.id);
 
@@ -42,15 +41,17 @@ class Orders {
         userEmail
       );
 
-      productsOnOrder.forEach(async (productOrder: IIProduct) => {
-        await productsService.sellProduct(
-          productOrder.products.id,
-          productOrder.products.stock - productOrder.quantity
-        );
-      });
+      if (productsOnOrder) {
+        productsOnOrder.forEach(async (productOrder: IIProduct) => {
+          await productsService.sellProduct(
+            productOrder.products.id,
+            productOrder.products.stock - productOrder.quantity
+          );
+        });
+      }
 
       const { data: newCart } = await supabase
-        .from("shopping_carts")
+        .from('shopping_carts')
         .insert([{ user_id: userId }])
         .select()
         .single();

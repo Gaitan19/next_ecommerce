@@ -1,11 +1,10 @@
 import { IUser } from '@/models/userModel';
 import { createClient } from '@/utils/supabase/server';
 
-const supabase = createClient();
-
 class User {
   async getUser(): Promise<IUser> {
     try {
+      const supabase = createClient();
       const {
         data: { user },
       } = await supabase.auth.getUser();

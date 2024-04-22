@@ -1,6 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
-
-const supabase = createClient();
+import { createClient } from '@/utils/supabase/server';
 
 interface IDataUser {
   id: number;
@@ -18,13 +16,15 @@ interface IDataOrder {
 export interface IDataHistory {
   id: number;
   user: IDataUser;
-  order: IDataOrder;
+  orders: IDataOrder;
 }
 
 class Log {
   async saveLog(userId: number, orderId: number): Promise<void> {
     try {
-      const { error } = await supabase.from("purchase_history").insert([
+      const supabase = createClient();
+
+      const { error } = await supabase.from('purchase_history').insert([
         {
           user_id: userId,
           order_id: orderId,
@@ -37,8 +37,10 @@ class Log {
 
   async getLogs(userId: number): Promise<IDataHistory[]> {
     try {
+      const supabase = createClient();
+
       const { data: historyData, error } = await supabase
-        .from("purchase_history")
+        .from('purchase_history')
         .select(
           `
         id,
@@ -55,10 +57,42 @@ class Log {
             )
         `
         )
-        .eq("user_id", userId);
+        .eq('user_id', userId);
 
-      if (error) throw new Error("Failed");
+      if (error) throw new Error('Failed');
       return historyData as unknown as IDataHistory[];
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }
+
+  async getLog(logId: number): Promise<IDataHistory> {
+    try {
+      const supabase = createClient();
+
+      const { data: historyData, error } = await supabase
+        .from('purchase_history')
+        .select(
+          `
+        id,
+        user(
+            id,
+            email
+        ),
+        orders(
+            id,
+            cart_id,
+            shipping_address,
+            payment_method,
+            order_status      
+            )
+        `
+        )
+        .eq('id', logId)
+        .single();
+
+      if (error) throw new Error('Failed');
+      return historyData as unknown as IDataHistory;
     } catch (error: any) {
       throw new Error(error.message);
     }

@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "production":"npm run build && npm run start"
   },
   "dependencies": {
     "@coreui/coreui": "^5.0.0",
@@ -24,6 +25,7 @@
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.5",
     "sass": "^1.75.0",
+    "sharp": "^0.33.3",
     "tailwindcss": "3.4.1",
     "typescript": "5.3.3",
     "uuid": "^9.0.1"

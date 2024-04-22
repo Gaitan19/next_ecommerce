@@ -1,15 +1,15 @@
-import { v4 } from "uuid";
-import { FaRegTrashAlt } from "react-icons/fa";
-import Image from "next/image";
-import { tableHeaders } from "@/data/cartViewData";
-import { IIProduct, cartDetailsService } from "@/services/cartDetailsService";
-import ButtonTrash from "./ButtonTrash";
-import { handleDelete } from "@/actions/deleteCartProduct";
-import ButtonSaveQuantity from "./ButtonSaveQuantity";
-import { handleQuantity } from "@/actions/saveQuantity";
+import { v4 } from 'uuid';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import Image from 'next/image';
+import { tableHeaders } from '@/data/cartViewData';
+import { IIProduct, cartDetailsService } from '@/services/cartDetailsService';
+import ButtonTrash from './ButtonTrash';
+import { handleDelete } from '@/actions/deleteCartProduct';
+import ButtonSaveQuantity from './ButtonSaveQuantity';
+import { handleQuantity } from '@/actions/saveQuantity';
 
-const TableView = async ({ email }: any) => {
-  const productsCart = await cartDetailsService.getProductsCart(email);
+const TableView = async ({ email, productsCart }: any) => {
+  // const productsCart = await cartDetailsService.getProductsCart(email);
 
   const getTotalFood = (quantity: number, price: number) => quantity * price;
 
@@ -21,7 +21,7 @@ const TableView = async ({ email }: any) => {
     ));
 
   const renderTableBody = () =>
-    productsCart.map((productCart: IIProduct) => (
+    productsCart?.map((productCart: IIProduct) => (
       <tr key={productCart.id} className="View-table-rows">
         <td className="View-table-item">
           <ButtonTrash
@@ -72,7 +72,7 @@ const TableView = async ({ email }: any) => {
 
   return (
     <div className="View-container-table">
-      {productsCart.length !== 0 && (
+      {productsCart?.length !== 0 && (
         <table className="View-table">
           <thead className="View-table-headers">
             <tr>{renderTableHeaders()}</tr>

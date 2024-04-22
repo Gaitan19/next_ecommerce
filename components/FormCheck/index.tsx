@@ -1,18 +1,20 @@
-import { saveOrder } from "@/actions/saveOrder";
-import { paymentMethods } from "@/data/cartViewData";
-import { cartDetailsService } from "@/services/cartDetailsService";
+import { saveOrder } from '@/actions/saveOrder';
+import { paymentMethods } from '@/data/cartViewData';
+import { cartDetailsService } from '@/services/cartDetailsService';
 
 const FormCheck = async ({ email, children }: any) => {
   const productsCart = await cartDetailsService.getProductsCart(email);
 
   const renderPaymentMethods = () =>
-    paymentMethods.map((paymentMethod: string) => (
-      <option value={paymentMethod}>{paymentMethod}</option>
+    paymentMethods.map((paymentMethod: string, index: number) => (
+      <option key={index} defaultValue={paymentMethod}>
+        {paymentMethod}
+      </option>
     ));
 
   return (
     <>
-      {productsCart.length !== 0 && (
+      {productsCart?.length !== 0 && (
         <form>
           {children}
 
@@ -21,7 +23,7 @@ const FormCheck = async ({ email, children }: any) => {
               <label className="text-md">Email:</label>
               <input
                 className="rounded-md px-4 py-2 bg-inherit border mb-6"
-                value={email}
+                defaultValue={email}
                 name="email"
                 readOnly
               />
@@ -45,7 +47,7 @@ const FormCheck = async ({ email, children }: any) => {
               </label>
               <select
                 name="PaymentMethods"
-                defaultValue={paymentMethods}
+                defaultValue={paymentMethods[0]}
                 required
               >
                 {renderPaymentMethods()}

@@ -1,17 +1,16 @@
-import { IProduct } from "@/models/productsModel";
-import { TPoduct, TPoducts } from "@/types/types";
-import { createClient } from "@/utils/supabase/server";
-
-const supabase = createClient();
+import { IProduct } from '@/models/productsModel';
+import { TPoduct, TPoducts } from '@/types/types';
+import { createClient } from '@/utils/supabase/server';
 
 class Products {
   async getProductsFilter(filter: string): Promise<TPoducts> {
     try {
+      const supabase = createClient();
       const { error, data: products } = await supabase
-        .from("products")
+        .from('products')
         .select()
-        .eq("category", filter)
-        .order("id", { ascending: true });
+        .eq('category', filter)
+        .order('id', { ascending: true });
 
       if (error) {
         throw new Error("couldn't read products");
@@ -25,16 +24,19 @@ class Products {
 
   async getAProducts(): Promise<TPoducts> {
     try {
+      const supabase = createClient();
       const { error, data: products } = await supabase
-        .from("products")
+        .from('products')
         .select()
-        .order("id", { ascending: true });
+        .order('id', { ascending: true });
 
       if (error) {
-        throw new Error("couldn't read products");
+        // throw new Error("couldn't read products");
+
+        console.log('error :>> ', error);
       }
 
-      return products;
+      return products as TPoducts;
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -43,7 +45,7 @@ class Products {
   async getAllProducts(filter: string): Promise<TPoducts> {
     try {
       const products =
-        filter === "all"
+        filter === 'all'
           ? await this.getAProducts()
           : await this.getProductsFilter(filter);
 
@@ -55,10 +57,11 @@ class Products {
 
   async sellProduct(id: number, newStock: number): Promise<TPoduct> {
     try {
+      const supabase = createClient();
       const { error, data: product } = await supabase
-        .from("products")
+        .from('products')
         .update({ stock: newStock })
-        .eq("id", id)
+        .eq('id', id)
         .select()
         .single();
 

@@ -1,6 +1,6 @@
-import { ICartProduct } from "@/models/productsModel";
-import { IIProduct, cartDetailsService } from "@/services/cartDetailsService";
-import { v4 } from "uuid";
+import { ICartProduct } from '@/models/productsModel';
+import { IIProduct, cartDetailsService } from '@/services/cartDetailsService';
+import { v4 } from 'uuid';
 
 const CheckoutOrder = async ({ email }: any) => {
   const productsCart = await cartDetailsService.getProductsCart(email);
@@ -10,7 +10,7 @@ const CheckoutOrder = async ({ email }: any) => {
   let total = 0;
 
   const renderOrders = () =>
-    productsCart.map((product: IIProduct) => {
+    productsCart?.map((product: IIProduct) => {
       total += getTotalFood(product.quantity, product.products.price);
       return (
         <div key={v4()} className="Checkout-orders">
@@ -26,11 +26,13 @@ const CheckoutOrder = async ({ email }: any) => {
   return (
     <div className="Checkout-box">
       <h3 className="Checkout-title Checkout-box-title">Your Order</h3>
-      <div className="Checkout-container-orders">{renderOrders()}</div>
+      <div className="Checkout-container-orders">
+        {productsCart && renderOrders()}
+      </div>
       <div className="Checkout-orders">
         <span>Total Amount</span>
         <span>${total}</span>
-        <input className="hidden" value={total} name="totalValue" />
+        <input className="hidden" defaultValue={total} name="totalValue" />
       </div>
     </div>
   );

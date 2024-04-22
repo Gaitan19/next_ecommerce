@@ -1,11 +1,7 @@
-const ButtonSaveQuantity = ({
-  action,
-  text,
-  productId,
-}: any) => {
+const ButtonSaveQuantity = ({ action, text, productId }: any) => {
   return (
-     <>
-      <input name="product" value={productId} className="hidden" />
+    <>
+      <input name="product" defaultValue={productId} className="hidden" />
       <button
         type="submit"
         formAction={action}
@@ -13,7 +9,7 @@ const ButtonSaveQuantity = ({
       >
         {text}
       </button>
-     </>
+    </>
   );
 };
 

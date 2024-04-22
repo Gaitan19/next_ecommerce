@@ -1,9 +1,8 @@
-import { IProduct } from "@/models/productsModel";
-import { ICartDetails } from "@/models/cartDetailsModel";
-import { createClient } from "@/utils/supabase/server";
-import { cartService } from "./cartService";
-
-const supabase = createClient();
+import { IProduct } from '@/models/productsModel';
+import { ICartDetails } from '@/models/cartDetailsModel';
+import { createClient } from '@/utils/supabase/server';
+import { cartService } from './cartService';
+import { ICart } from '@/models/cartModel';
 
 export interface IIProduct {
   id: number;
@@ -16,13 +15,14 @@ class CartDetailService {
     product_id: number,
     email: string
   ): Promise<ICartDetails | void> {
+    const supabase = createClient();
     try {
       const cart = await cartService.getCart(email);
 
-      if (!cart) throw new Error("Failed");
+      if (!cart) throw new Error('Failed');
 
       const { data: cartProduct } = await supabase
-        .from("cart_details")
+        .from('cart_details')
         .insert([
           {
             cart_id: cart.id,
@@ -42,21 +42,22 @@ class CartDetailService {
     product_id: number,
     email: string
   ): Promise<ICartDetails | void> {
+    const supabase = createClient();
     try {
       const cart = await cartService.getCart(email);
 
-      if (!cart) throw new Error("Failed");
+      if (!cart) throw new Error('Failed');
 
       const { data: productToDelete } = await supabase
-        .from("cart_details")
+        .from('cart_details')
         .select()
         .match({ product_id, cart_id: cart.id })
         .single();
 
       const response = await supabase
-        .from("cart_details")
+        .from('cart_details')
         .delete()
-        .eq("id", productToDelete.id);
+        .eq('id', productToDelete.id);
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -66,17 +67,19 @@ class CartDetailService {
     productName: string,
     email: string
   ): Promise<boolean | void> {
+    const supabase = createClient();
+
     const cart = await cartService.getCart(email);
 
     if (cart) {
       const { data: productData } = await supabase
-        .from("products")
+        .from('products')
         .select()
-        .eq("title", productName)
+        .eq('title', productName)
         .single();
 
       const { data: productsCart, error } = await supabase
-        .from("cart_details")
+        .from('cart_details')
         .select()
         .match({ cart_id: cart.id, product_id: productData.id })
         .single();
@@ -87,10 +90,11 @@ class CartDetailService {
     }
   }
 
-  async handleGetProducts(cart_id: number): Promise<IIProduct[]> {
+  async handleGetProducts(cart_id: number | undefined): Promise<IIProduct[]> {
+    const supabase = createClient();
     try {
       const { data: productCarts } = await supabase
-        .from("shopping_carts")
+        .from('shopping_carts')
         .select(
           `
           id,
@@ -111,10 +115,10 @@ class CartDetailService {
           )
           `
         )
-        .eq("id", cart_id)
+        .eq('id', cart_id)
         .single();
 
-      if (!productCarts) throw new Error("Failed");
+      if (!productCarts) throw new Error('Failed');
 
       const { cart_details } = productCarts;
 
@@ -128,16 +132,16 @@ class CartDetailService {
     }
   }
 
-  async getProductsCart(email: string): Promise<IIProduct[]> {
+  async getProductsCart(email: string): Promise<IIProduct[] | undefined> {
     try {
-      const cart = await cartService.getCart(email);
-      if (!cart) throw new Error("failed");
+      const cart: ICart | undefined = await cartService.getCart(email);
 
-      const dataCartDetails = await this.handleGetProducts(cart.id);
+      const dataCartDetails = await this.handleGetProducts(cart?.id);
 
       return dataCartDetails as unknown as IIProduct[];
     } catch (error: any) {
-      throw new Error(error.message);
+      // throw new Error(error.message);
+      console.log(error.message);
     }
   }
 
@@ -145,11 +149,12 @@ class CartDetailService {
     productId: number,
     newQuantity: Number
   ): Promise<void> {
+    const supabase = createClient();
     try {
       const { data, error } = await supabase
-        .from("cart_details")
+        .from('cart_details')
         .update({ quantity: newQuantity })
-        .eq("id", productId)
+        .eq('id', productId)
         .select();
     } catch (error: any) {
       throw new Error(error.message);

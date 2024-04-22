@@ -1,13 +1,23 @@
-const ButtonAdd = ({action,text,isCartProduct,productId,email}:any) => {
+const ButtonAdd = ({ action, text, isCartProduct, productId, email }: any) => {
   return (
     <form>
-        <input name="product" value={productId} className="hidden"/>
-        <input name="isCartProduct" value={isCartProduct} className="hidden"/>
-        <input name="email" value={email} className="hidden"/>
-        
-        <button type="submit" formAction={action} className="border-solid border-2" >{text}</button>
-    </form>
-  )
-}
+      <input name="product" defaultValue={productId} className="hidden" />
+      <input
+        name="isCartProduct"
+        defaultValue={isCartProduct}
+        className="hidden"
+      />
+      <input name="email" defaultValue={email} className="hidden" />
 
-export default ButtonAdd
+      <button
+        type="submit"
+        formAction={action}
+        className="inline-block bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-3 border border-gray-300 rounded transition duration-300 ease-in-out"
+      >
+        {text}
+      </button>
+    </form>
+  );
+};
+
+export default ButtonAdd;

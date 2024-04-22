@@ -1,26 +1,12 @@
 import { saveOrder } from "@/actions/saveOrder";
 import { paymentMethods } from "@/data/cartViewData";
 import { cartDetailsService } from "@/services/cartDetailsService";
-import { v4 } from "uuid";
 
 const FormCheck = async ({ email, children }: any) => {
   const productsCart = await cartDetailsService.getProductsCart(email);
 
   const renderPaymentMethods = () =>
     paymentMethods.map((paymentMethod: string) => (
-      // <div key={v4()} className="Checkout-container-methods">
-      //   <input
-      //     className="Checkout-radio"
-      //     id={paymentMethod}
-      //     type="radio"
-      //     name="PaymentMethods"
-      //     required
-      //   />
-      //   <label className="Checkout-label" htmlFor={paymentMethod}>
-      //     {paymentMethod}
-      //   </label>
-      // </div>
-
       <option value={paymentMethod}>{paymentMethod}</option>
     ));
 

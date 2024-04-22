@@ -35,9 +35,7 @@ const Product = async ({
   return (
     <article className="border-solid border-2 overflow-hidden">
       <Image width={200} height={200} src={thumbnail} alt="product" />
-      <h3>
-        {id}-{title}
-      </h3>
+      <h3>{title}</h3>
       <p>{description}</p>
       <div>
         <span>{category}</span>

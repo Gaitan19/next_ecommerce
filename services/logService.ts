@@ -10,6 +10,9 @@ interface IDataUser {
 interface IDataOrder {
   id: number;
   cart_id: number;
+  shipping_address: string;
+  payment_method: string;
+  order_status: string;
 }
 
 export interface IDataHistory {
@@ -45,8 +48,11 @@ class Log {
         ),
         orders(
             id,
-            cart_id
-        )
+            cart_id,
+            shipping_address,
+            payment_method,
+            order_status      
+            )
         `
         )
         .eq("user_id", userId);

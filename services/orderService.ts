@@ -34,8 +34,6 @@ class Orders {
         .select()
         .single();
 
-      console.log("orderData>>", orderData);
-
       if (error) throw new Error("Failed");
 
       logService.saveLog(userId, orderData.id);
@@ -43,8 +41,6 @@ class Orders {
       const productsOnOrder = await cartDetailsService.getProductsCart(
         userEmail
       );
-
-      console.log("productsOnOrder :>> ", productsOnOrder);
 
       productsOnOrder.forEach(async (productOrder: IIProduct) => {
         await productsService.sellProduct(

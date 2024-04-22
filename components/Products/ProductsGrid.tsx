@@ -2,11 +2,14 @@ import { IProduct } from "@/models/productsModel";
 import { productsService } from "@/services/products";
 import { TPoducts } from "@/types/types";
 import Product from "../Product";
+import { filterService } from "@/services/filterService";
 
 const ProductsGrid = async ({ email }: any) => {
+  const filter: string = await filterService.getfilter();
+  const products: TPoducts = await productsService.getAllProducts(filter);
+
   const renderProducts = async () => {
-    const products: TPoducts = await productsService.getAllProducts();
-    return products.map((product: IProduct) => {
+    return products.map((product: IProduct, index: number) => {
       return (
         <Product
           id={product.id}

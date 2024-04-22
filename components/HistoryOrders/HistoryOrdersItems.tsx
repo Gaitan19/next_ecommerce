@@ -6,8 +6,6 @@ const HistoryOrdersItems = async () => {
 
   const orders: IDataHistory[] = await logService.getLogs(user.id);
 
-  console.log("orders :>> ", orders);
-
   return <div>history</div>;
 };
 

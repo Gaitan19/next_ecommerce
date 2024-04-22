@@ -8,7 +8,7 @@ const Cart = async ({ user }: any) => {
   const productsCart = await cartDetailsService.getProductsCart(user.email);
 
   return (
-    <div className="wrapper flex flex-col gap-40">
+    <div className="wrapper flex flex-col gap-20 pt-10">
       {productsCart?.length !== 0 ? (
         <>
           <TableView email={user.email} productsCart={productsCart} />

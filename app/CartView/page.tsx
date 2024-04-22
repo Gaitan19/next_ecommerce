@@ -18,7 +18,7 @@ export default function cartPage() {
   return (
     <>
       <HeaderEcommerce value={data.value} />
-      <section>
+      <section className="w-full mb-16">
         <div className="container">
           <Cart user={user} />
         </div>

@@ -5,6 +5,12 @@ import { IDataHistory, logService } from '@/services/logService';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Details',
+};
+
 export default async function DetailsPage({
   params,
 }: {

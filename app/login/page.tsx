@@ -7,6 +7,12 @@ import { SubmitButton } from './submit-button';
 import ecommerce_logo from '@/assets/images/ecommerce_logo.png';
 import Image from 'next/image';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Login',
+};
+
 export default function Login({
   searchParams,
 }: {

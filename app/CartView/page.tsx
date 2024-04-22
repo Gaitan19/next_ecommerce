@@ -6,6 +6,12 @@ import TableView from '@/components/TableView';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'CartView',
+};
+
 export default function cartPage() {
   const cookieStore = cookies();
 

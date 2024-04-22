@@ -1,8 +1,8 @@
-import HistoryOrdersItems from "./HistoryOrdersItems";
+import HistoryOrdersItems from './HistoryOrdersItems';
 
 const HistoryOrders = () => {
   return (
-    <section>
+    <section className="w-full">
       <div className="container">
         <HistoryOrdersItems />
       </div>

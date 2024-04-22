@@ -1,4 +1,3 @@
-import { ICartProduct } from '@/models/productsModel';
 import { IIProduct, cartDetailsService } from '@/services/cartDetailsService';
 import { v4 } from 'uuid';
 
@@ -13,9 +12,9 @@ const CheckoutOrder = async ({ email }: any) => {
     productsCart?.map((product: IIProduct) => {
       total += getTotalFood(product.quantity, product.products.price);
       return (
-        <div key={v4()} className="Checkout-orders">
-          <span>{`${product.products.title} x ${product.quantity}`}</span>
-          <span>{`$${getTotalFood(
+        <div key={v4()} className="flex justify-between items-center py-2">
+          <span className="text-gray-800">{`${product.products.title} x ${product.quantity}`}</span>
+          <span className="text-gray-800">{`$${getTotalFood(
             product.quantity,
             product.products.price
           )}`}</span>
@@ -24,14 +23,12 @@ const CheckoutOrder = async ({ email }: any) => {
     });
 
   return (
-    <div className="Checkout-box">
-      <h3 className="Checkout-title Checkout-box-title">Your Order</h3>
-      <div className="Checkout-container-orders">
-        {productsCart && renderOrders()}
-      </div>
-      <div className="Checkout-orders">
-        <span>Total Amount</span>
-        <span>${total}</span>
+    <div className="bg-gray-100 rounded-lg shadow-md p-6 border-t-2 border-gray-300 mb-4">
+      <h3 className="text-lg font-semibold text-gray-800 mb-4">Your Order</h3>
+      <div className="space-y-2">{productsCart && renderOrders()}</div>
+      <div className="flex justify-between items-center mt-4 bg-gray-200 rounded-md p-3">
+        <span className="text-gray-800">Total Amount</span>
+        <span className="text-gray-800">${total}</span>
         <input className="hidden" defaultValue={total} name="totalValue" />
       </div>
     </div>

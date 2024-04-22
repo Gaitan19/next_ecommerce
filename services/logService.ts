@@ -11,6 +11,7 @@ interface IDataOrder {
   shipping_address: string;
   payment_method: string;
   order_status: string;
+  total?: number;
 }
 
 export interface IDataHistory {
@@ -84,7 +85,8 @@ class Log {
             cart_id,
             shipping_address,
             payment_method,
-            order_status      
+            order_status,
+            total      
             )
         `
         )

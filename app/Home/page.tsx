@@ -3,6 +3,12 @@ import Products from '@/components/Products';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Home',
+};
+
 export default function homePage() {
   const cookieStore = cookies();
 
@@ -13,7 +19,7 @@ export default function homePage() {
   return (
     <>
       <HeaderEcommerce value={data.value} />
-      <Products data={data.value}/>
+      <Products data={data.value} />
     </>
   );
 }

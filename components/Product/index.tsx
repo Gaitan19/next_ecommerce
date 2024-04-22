@@ -61,7 +61,7 @@ const Product = async ({
             <ButtonAdd
               action={handleAdd}
               email={email}
-              text={`${isCartProduct ? 'Delete From Cart' : 'Add To Cart'}`}
+              text={`${isCartProduct ? 'Remove' : 'Add To Cart'}`}
               isCartProduct={isCartProduct}
               productId={id}
             />

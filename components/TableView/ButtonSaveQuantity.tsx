@@ -5,7 +5,7 @@ const ButtonSaveQuantity = ({ action, text, productId }: any) => {
       <button
         type="submit"
         formAction={action}
-        className="border-solid border-2"
+        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 border border-gray-400 rounded inline-block"
       >
         {text}
       </button>

@@ -5,6 +5,12 @@ import { IDataHistory, logService } from '@/services/logService';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Details',
+};
+
 export default async function DetailsPage({
   params,
 }: {
@@ -13,18 +19,13 @@ export default async function DetailsPage({
   const cookieStore = cookies();
 
   const data = cookieStore.get('sb-fcybhjbilfsdcxkomjfk-auth-token');
-  // const params = useParams();
 
   if (!data) return redirect('/login');
 
   return (
     <>
       <HeaderEcommerce value={data.value} />
-      <OrderDetail
-        orderId={params.id}
-        // orderDetails={orderDetails}
-        // products={products}
-      />
+      <OrderDetail orderId={params.id} />
     </>
   );
 }

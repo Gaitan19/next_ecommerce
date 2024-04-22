@@ -1,34 +1,27 @@
-import { IProduct } from '@/models/productsModel';
-import { productsService } from '@/services/products';
-import { TPoducts } from '@/types/types';
-import { alertMessage } from '../Alert';
-import Product from '../Product';
+import { IProduct } from "@/models/productsModel";
+import { productsService } from "@/services/products";
+import { TPoducts } from "@/types/types";
+import Product from "../Product";
 
-const ProductsGrid = async ({email}:any) => {
+const ProductsGrid = async ({ email }: any) => {
   const renderProducts = async () => {
-    try {
-      const products: TPoducts = await productsService.getAllProducts();
-      return products.map((product: IProduct) => {
-        return (
-          
-
-          <Product
-            id={product.id}
-            title={product.title}
-            category={product.category}
-            created_at={product.created_at}
-            description={product.description}
-            price={product.price}
-            stock={product.stock}
-            thumbnail={product.thumbnail}
-            key={product.id}
-            email={email}
-          />
-        );
-      });
-    } catch (error: any) {
-      alertMessage.error(error);
-    }
+    const products: TPoducts = await productsService.getAllProducts();
+    return products.map((product: IProduct) => {
+      return (
+        <Product
+          id={product.id}
+          title={product.title}
+          category={product.category}
+          created_at={product.created_at}
+          description={product.description}
+          price={product.price}
+          stock={product.stock}
+          thumbnail={product.thumbnail}
+          key={product.id}
+          email={email}
+        />
+      );
+    });
   };
 
   return (

@@ -75,10 +75,6 @@ const TableView = async ({ email, productsCart }: any) => {
         </td>
 
         <td className="py-3 px-4 text-gray-800">
-          <span>{productCart.quantity}</span>
-        </td>
-
-        <td className="py-3 px-4 text-gray-800">
           ${getTotalFood(productCart.quantity, productCart.products.price)}
         </td>
       </tr>

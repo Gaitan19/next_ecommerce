@@ -1,13 +1,6 @@
 import { v4 } from 'uuid';
 
-export const tableHeaders = [
-  'remove',
-  'image',
-  'food',
-  'price',
-  'quantity',
-  'total',
-];
+export const tableHeaders = ['remove', 'image', 'price', 'quantity', 'total'];
 
 export const billingsInformation = [
   {

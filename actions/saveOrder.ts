@@ -12,14 +12,6 @@ export const saveOrder = async (formData: FormData) => {
 
   const userData = await userService.getUser();
 
-  console.log("userData :>> ", userData);
-
-  console.log("email>>", email);
-
-  console.log("paymentMethod :>> ", paymentMethod);
-  console.log("shippingAddress :>> ", shippingAddress);
-  console.log("totalValue :>> ", totalValue);
-
   await orderService.handleSaveOrder(
     userData.id,
     email,

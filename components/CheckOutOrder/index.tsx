@@ -25,7 +25,9 @@ const CheckoutOrder = async ({ email }: any) => {
   return (
     <div className="bg-gray-100 rounded-lg shadow-md p-6 border-t-2 border-gray-300 mb-4">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">Your Order</h3>
-      <div className="space-y-2">{productsCart && renderOrders()}</div>
+      <div className="space-y-2 max-h-[344px] overflow-auto">
+        {productsCart && renderOrders()}
+      </div>
       <div className="flex justify-between items-center mt-4 bg-gray-200 rounded-md p-3">
         <span className="text-gray-800">Total Amount</span>
         <span className="text-gray-800">${total}</span>

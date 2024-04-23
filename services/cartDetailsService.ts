@@ -90,7 +90,9 @@ class CartDetailService {
     }
   }
 
-  async handleGetProducts(cart_id: number | undefined): Promise<IIProduct[]> {
+  async handleGetProducts(
+    cart_id: number | undefined
+  ): Promise<IIProduct[] | undefined> {
     const supabase = createClient();
     try {
       const { data: productCarts } = await supabase
@@ -118,7 +120,7 @@ class CartDetailService {
         .eq('id', cart_id)
         .single();
 
-      if (!productCarts) throw new Error('Failed');
+      if (!productCarts) return undefined;
 
       const { cart_details } = productCarts;
 

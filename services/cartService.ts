@@ -20,6 +20,7 @@ class Cart {
       if (error) throw new Error('failed ');
 
       // isCompleted
+
       if (shoppingCart?.length === 0) {
         const { data: newShoppingCart } = await supabase
           .from('shopping_carts')

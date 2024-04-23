@@ -108,26 +108,26 @@ class Products {
     return mostRepeatedCategory[0];
   }
 
-  async getRecommendations(): Promise<TPoducts> {
-    try {
-      const supabase = createClient();
+  async getRecommendations(): Promise<TPoducts | null> {
+    const supabase = createClient();
 
-      const user = await userService.getUser();
+    const user = await userService.getUser();
 
-      const { data: dataOrder, error } = await supabase
-        .from('orders')
-        .select()
-        .eq('user_id', user.id)
-        .order('id', { ascending: false });
+    const { data: dataOrder, error } = await supabase
+      .from('orders')
+      .select()
+      .eq('user_id', user.id)
+      .order('id', { ascending: false });
 
-      if (error) {
-        throw new Error("couldn't read products");
-      }
+    if (error) {
+      throw new Error("couldn't read products");
+    }
 
-      const dataProducts = await cartDetailsService.handleGetProducts(
-        dataOrder[0].cart_id
-      );
+    const dataProducts = await cartDetailsService.handleGetProducts(
+      dataOrder[0]?.cart_id
+    );
 
+    if (dataProducts) {
       const mostRepeatedCategory = await this.mostRepeatedCategory(
         dataProducts
       );
@@ -138,12 +138,12 @@ class Products {
         .eq('category', mostRepeatedCategory)
         .limit(3);
 
-      if (!recomendedProducts) throw new Error('Failed');
+      if (!recomendedProducts) return null;
 
       return recomendedProducts;
-    } catch (error: any) {
-      throw new Error(error.message);
     }
+
+    return null;
   }
 }
 

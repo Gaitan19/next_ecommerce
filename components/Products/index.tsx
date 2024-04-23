@@ -25,7 +25,9 @@ const Products = async ({ data }: any) => {
 
               {recommendedProducts && (
                 <>
-                  <h3>Recommendations</h3>
+                  <h3 className="block text-lg font-semibold mb-4">
+                    Recommendations
+                  </h3>
                   <ProductsGrid
                     email={user.email}
                     products={recommendedProducts}

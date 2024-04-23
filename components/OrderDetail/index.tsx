@@ -4,12 +4,11 @@ import Image from 'next/image';
 
 const OrderDetail = async ({ orderId }: any) => {
   const orderDetails: IDataHistory = await logService.getLog(parseInt(orderId));
-  const products: IIProduct[] = await cartDetailsService.handleGetProducts(
-    orderDetails.orders.cart_id
-  );
+  const products: IIProduct[] | undefined =
+    await cartDetailsService.handleGetProducts(orderDetails.orders.cart_id);
 
   const renderProducts = () => {
-    return products.map((product: IIProduct, index: number) => {
+    return products?.map((product: IIProduct, index: number) => {
       return (
         <article
           key={product.id}
@@ -64,7 +63,7 @@ const OrderDetail = async ({ orderId }: any) => {
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Products:</h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {renderProducts()}
+        {products && renderProducts()}
       </div>
     </div>
   );

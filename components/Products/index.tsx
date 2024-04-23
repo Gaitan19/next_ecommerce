@@ -10,6 +10,8 @@ const Products = async ({ data }: any) => {
 
   const filter: string = await filterService.getfilter();
 
+  const recommendedProducts = await productsService.getRecommendations();
+
   const products: TPoducts = await productsService.getAllProducts(filter);
 
   return (
@@ -19,11 +21,17 @@ const Products = async ({ data }: any) => {
           {products ? (
             <>
               <Filter filter={filter} />
-              <ProductsGrid
-                email={user.email}
-                filter={filter}
-                products={products}
-              />
+              <ProductsGrid email={user.email} products={products} />
+
+              {recommendedProducts && (
+                <>
+                  <h3>Recommendations</h3>
+                  <ProductsGrid
+                    email={user.email}
+                    products={recommendedProducts}
+                  />
+                </>
+              )}
             </>
           ) : (
             <Preview />

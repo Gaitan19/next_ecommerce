@@ -3,6 +3,7 @@ import { IDataHistory, logService } from '@/services/logService';
 import { userService } from '@/services/userService';
 import Link from 'next/link';
 import { v4 } from 'uuid';
+import Preview from '../Preview';
 
 const HistoryOrdersItems = async () => {
   const user = await userService.getUser();
@@ -40,13 +41,15 @@ const HistoryOrdersItems = async () => {
 
   return (
     <div className="w-full pt-10 max-h-[569px] overflow-auto">
-      {orders.length !== 0 && (
+      {orders.length !== 0 ? (
         <table className="w-full table-auto border-collapse border border-gray-300 shadow-md rounded-lg">
           <thead>
             <tr>{renderTableHeaders()}</tr>
           </thead>
           <tbody>{renderTableBody()}</tbody>
         </table>
+      ) : (
+        <Preview text="No orders" />
       )}
     </div>
   );
